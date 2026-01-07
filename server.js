@@ -11,7 +11,7 @@ app.get("/", (req, res) => {
 
 app.get("/price/:coin", async (req, res) => {
   try {
-    let coin = req.params.coin.toUpperCase();
+    const coin = req.params.coin.toUpperCase();
 
     const response = await fetch(
       `https://api.binance.com/api/v3/ticker/price?symbol=${coin}USDT`
@@ -23,7 +23,10 @@ app.get("/price/:coin", async (req, res) => {
       return res.json({ error: "Invalid coin" });
     }
 
-    res.json({ coin, price: data.price });
+    res.json({
+      coin,
+      price: data.price
+    });
   } catch (err) {
     res.json({ error: "Server error" });
   }
