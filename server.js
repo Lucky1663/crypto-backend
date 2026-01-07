@@ -6,29 +6,29 @@ const app = express();
 app.use(cors());
 
 app.get("/", (req, res) => {
-  res.send("API Running");
+  res.send("Crypto Backend Running");
 });
 
 app.get("/price/:coin", async (req, res) => {
   try {
-    const coin = req.params.coin.toUpperCase();
+    let coin = req.params.coin.toUpperCase();
 
-    const r = await fetch(
+    const response = await fetch(
       `https://api.binance.com/api/v3/ticker/price?symbol=${coin}USDT`
     );
 
-    const data = await r.json();
+    const data = await response.json();
 
     if (!data.price) {
       return res.json({ error: "Invalid coin" });
     }
 
-    res.json({ price: data.price });
+    res.json({ coin, price: data.price });
 
-  } catch {
+  } catch (err) {
     res.json({ error: "Server error" });
   }
 });
 
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => console.log("Running on " + PORT));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log("Server running on " + PORT));
