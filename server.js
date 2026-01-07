@@ -24,11 +24,10 @@ app.get("/price/:coin", async (req, res) => {
     }
 
     res.json({ coin, price: data.price });
-
   } catch (err) {
     res.json({ error: "Server error" });
   }
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log("Server running on " + PORT));
+app.listen(PORT, () => console.log("Server running"));
